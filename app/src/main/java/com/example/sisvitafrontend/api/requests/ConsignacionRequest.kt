@@ -4,8 +4,11 @@ import java.sql.Date
 
 data class ConsignacionRequest(
     val date: Date,
-    val newInterpretation: String,
+    val idDiagnostic: Long,
+    val idTreatment: Long,
     val observation: String,
-    val message: String,
-    val medicalAppointmentRequested: Boolean,
+    val fundament: String,
+    val idTestResolved: Long,
+    val idSpecialist: Long,
+    val idPaciente: Long
 )

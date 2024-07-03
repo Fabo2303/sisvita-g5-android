@@ -39,13 +39,4 @@ class TemplateTestViewModel: ViewModel() {
             }
         }
     }
-
-    private fun pollTemplateTest() {
-        viewModelScope.launch {
-            while (_templateTests.value.isNullOrEmpty()) {
-                getTemplateTest()
-                delay(1000)
-            }
-        }
-    }
 }

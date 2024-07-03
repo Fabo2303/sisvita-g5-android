@@ -1,5 +1,5 @@
 package com.example.sisvitafrontend.api.responses
 
-data class LoginResponse(
-    val jwt: String,
+data class SexResponse(
+    val sex: String
 )

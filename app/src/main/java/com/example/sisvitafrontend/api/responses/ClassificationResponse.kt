@@ -5,5 +5,7 @@ data class ClassificationResponse(
     val idTemplateTest: Int,
     val interpretation: String,
     val maximum: Int,
-    val minimum: Int
+    val minimum: Int,
+    val anxietyColor: AnxietyColorResponse,
+    val intensity: Int,
 )

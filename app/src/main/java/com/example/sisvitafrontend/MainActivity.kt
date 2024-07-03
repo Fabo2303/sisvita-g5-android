@@ -17,7 +17,7 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             SisvitaFrontendTheme {
-                Surface(modifier = Modifier.fillMaxSize()) {  ->
+                Surface(modifier = Modifier.fillMaxSize()) {
                     SisvitaApp()
                 }
             }

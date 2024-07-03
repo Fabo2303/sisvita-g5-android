@@ -1,39 +1,99 @@
 <resources>
+    <!-- APP NAME -->
     <string name="app_name">Sisvita Frontend</string>
-    <string name="iniciar_sesion">Iniciar sesión</string>
-    <string name="registrarse">Registrarse</string>
+
+    <!-- DATA CONTROL -->
+    <string name="error">Error</string>
+    <string name="please_fill_all_fields">Por favor, llene todos los campos</string>
+    <string name="loading">Cargando…</string>
+    <string name="accept">Aceptar</string>
+
+    <!-- LOGIN SCREEN -->
+    <string name="login">Iniciar sesión</string>
+    <string name="login_button">Iniciar</string>
+    <string name="login_in_progress">Iniciando sesión…</string>
+    <string name="login_success">Inicio de sesión exitoso</string>
+    <string name="welcome_to_sisvita">Bienvenido a sisvita</string>
+    <string name="no_account">¿No tienes una cuenta?</string>
+    <string name="forgot_password">¿Olvidaste tu contraseña?</string>
+
+    <!-- REGISTER SCREEN -->
+    <string name="register">Registrarse</string>
+    <string name="register_button">Registrar</string>
+    <string name="register_in_progress">Registrando…</string>
+    <string name="register_success">Registro exitoso</string>
+    <string name="already_account">¿Ya tienes una cuenta?</string>
+
+    <!-- USER DATA -->
     <string name="username">Nombre de usuario</string>
     <string name="password">Contraseña</string>
-    <string name="ingresar">Ingresar</string>
-    <string name="no_tienes_una_cuenta">¿No tienes una cuenta?</string>
-    <string name="ya_tienes_una_cuenta">¿Ya tienes una cuenta?</string>
-    <string name="aceptar">Aceptar</string>
-    <string name="nombre">Nombre</string>
-    <string name="apellido_paterno">Apellido Paterno</string>
-    <string name="apellido_materno">Apellido Materno</string>
-    <string name="documento">Documento</string>
-    <string name="tipo_documento">Tipo de documento</string>
-    <string name="fecha_nacimiento">Fecha de nacimiento</string>
-    <string name="sexo">Sexo</string>
-    <string name="telefono">Teléfono</string>
-    <string name="correo">Correo</string>
-    <string name="departamento">Departamento</string>
-    <string name="provincia">Provincia</string>
-    <string name="distrito">Distrito</string>
-    <string name="realizar_test">Realizar test</string>
-    <string name="consultar_resultados">Consultar resultados</string>
-    <string name="realizar_vigilancia">Realizar vigilancia</string>
-    <string name="mapa_de_calor">Mapa de calor</string>
-    <string name="filtros">Filtros</string>
-    <string name="nivel_de_ansiedad">Tipo de ansiedad</string>
-    <string name="fecha">Fecha</string>
-    <string name="tipo_de_test">Tipo de test</string>
-    <string name="aplicar_filtros">Aplicar filtros</string>
-    <string name="limpiar_filtros">Limpiar filtros</string>
-    <string name="fecha_inicial">Fecha Inicio</string>
-    <string name="fecha_final">Fecha Fin</string>
-    <string name="nueva_interpretacion">Nueva Interpretacion</string>
-    <string name="observacion">Observacion</string>
-    <string name="mensaje">Mensaje</string>
-    <string name="realizar_cita_medica">Realizar cita medica</string>
+    <string name="name">Nombre</string>
+    <string name="last_names">Apellidos</string>
+    <string name="last_name">Apellido Paterno</string>
+    <string name="second_last_name">Apellido Materno</string>
+    <string name="document">Documento</string>
+    <string name="document_alert">Documento no válido</string>
+    <string name="document_type">Tipo de documento</string>
+    <string name="birth_date">Fecha de nacimiento</string>
+    <string name="sex">Sexo</string>
+    <string name="phone">Teléfono</string>
+    <string name="email">Correo</string>
+    <string name="email_placeholder">example@gmail.com</string>
+    <string name="email_alert">Correo no válido</string>
+    <string name="department">Departamento</string>
+    <string name="province">Provincia</string>
+    <string name="district">Distrito</string>
+    <string name="specialist">SPECIALIST</string>
+    <string name="patient">PATIENT</string>
+
+    <!-- PATIENT SCREENS -->
+    <string name="test">Test</string>
+    <string name="take_test">Realizar test</string>
+    <string name="check_results">Consultar resultados</string>
+    <string name="send_test">Enviar test</string>
+    <string name="send_test_in_progress">Enviando test…</string>
+    <string name="send_test_success">Test enviado exitosamente</string>
+    <string name="send_test_error">Error al enviar test</string>
+    <string name="please_mark_all_questions">Por favor, marque todas las preguntas</string>
+
+    <!-- COLOR DATA -->
+    <string name="red">red</string>
+    <string name="green">green</string>
+    <string name="yellow">yellow</string>
+
+    <!-- SPECIALIST SCREENS -->
+    <string name="take_surveillance">Realizar vigilancia</string>
+    <string name="heat_map">Mapa de calor</string>
+    <string name="filters">Filtros</string>
+    <string name="anxiety_level">Tipo de ansiedad</string>
+    <string name="date">Fecha</string>
+    <string name="test_type">Tipo de test</string>
+    <string name="apply_filters">Aplicar filtros</string>
+    <string name="clear_filters">Limpiar filtros</string>
+    <string name="initial_date">Fecha Inicio</string>
+    <string name="final_date">Fecha Fin</string>
+    <string name="new_interpretation">Nueva Interpretacion</string>
+    <string name="observation">Observacion</string>
+    <string name="message">Mensaje</string>
+    <string name="make_medical_appointment">Realizar cita medica</string>
+    <string name="empty_placeholder"> </string>
+    <string name="logo_sisvita">Logo de Sisvita</string>
+    <string name="details">Ver</string>
+    <string name="close">Cerrar</string>
+    <string name="consign">Consignar</string>
+    <string name="consign_in_progress">Consignando…</string>
+    <string name="patient_data">Datos del paciente</string>
+    <string name="test_results">Resultados del test</string>
+    <string name="result">Resultado</string>
+    <string name="interpretation">Interpretación</string>
+    <string name="questions">Preguntas</string>
+    <string name="answers">Respuestas</string>
+    <string name="answer">Respuesta</string>
+    <string name="evaluation">Evaluación</string>
+    <string name="treatment">Tratamiento</string>
+    <string name="comunication">Comunicación</string>
+    <string name="diagnostic">Diagnóstico</string>
+    <string name="fundament">Fundamento</string>
+    <string name="choose_diagnosis">Elija un diagnostico</string>
+    <string name="choose_treatment">Elija un tratamiento</string>
 </resources>

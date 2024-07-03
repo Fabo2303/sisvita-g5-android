@@ -16,7 +16,6 @@ import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -26,8 +25,9 @@ import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.sisvitafrontend.R
-import com.example.sisvitafrontend.components.Background
+import com.example.sisvitafrontend.components.global.Background
 import com.example.sisvitafrontend.components.ImagenButton
+import com.example.sisvitafrontend.components.global.CustomHeader
 import com.example.sisvitafrontend.navigation.Screen
 
 @Composable
@@ -42,7 +42,7 @@ fun MenuPatientScreen(navController: NavController) {
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Top
     ){
-        Header()
+        CustomHeader()
         Spacer(modifier = Modifier.height(16.dp))
         Box(
             modifier = Modifier
@@ -55,9 +55,9 @@ fun MenuPatientScreen(navController: NavController) {
                 verticalArrangement = Arrangement.Center
             ) {
                 ImagenButton(
-                    text = R.string.realizar_test,
-                    color = R.color.button_light,
-                    textColor = R.color.text_black_900,
+                    text = R.string.take_test,
+                    color = R.color.light_green_300,
+                    textColor = R.color.black_900,
                     shape = 12,
                     size = DpSize(width = 300.dp, height = 80.dp),
                     image = R.drawable.test,
@@ -69,9 +69,9 @@ fun MenuPatientScreen(navController: NavController) {
                 )
                 Spacer(modifier = Modifier.height(16.dp))
                 ImagenButton(
-                    text = R.string.consultar_resultados,
-                    color = R.color.button_light,
-                    textColor = R.color.text_black_900,
+                    text = R.string.check_results,
+                    color = R.color.light_green_300,
+                    textColor = R.color.black_900,
                     shape = 12,
                     size = DpSize(width = 300.dp, height = 80.dp),
                     image = R.drawable.sociology,
@@ -79,41 +79,7 @@ fun MenuPatientScreen(navController: NavController) {
                     textSize = 20,
                     onClick = {}
                 )
-                Spacer(modifier = Modifier.height(16.dp))
-                ImagenButton(
-                    text = R.string.realizar_test,
-                    color = R.color.button_light,
-                    textColor = R.color.text_black_900,
-                    shape = 12,
-                    size = DpSize(width = 300.dp, height = 80.dp),
-                    image = R.drawable.test,
-                    imageSize = 40,
-                    textSize = 20,
-                    onClick = {}
-                )
             }
         }
-    }
-}
-
-@Composable
-private fun Header() {
-    Box(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(
-                colorResource(id = R.color.header), shape = RoundedCornerShape(
-                    topStartPercent = 0,
-                    topEndPercent = 0,
-                    bottomStartPercent = 0,
-                    bottomEndPercent = 50
-                )
-            ), contentAlignment = Alignment.Center
-    ) {
-        Image(
-            painter = painterResource(id = R.drawable.rounded_logo),
-            contentDescription = "logo sisvita",
-            modifier = Modifier.size(200.dp)
-        )
     }
 }

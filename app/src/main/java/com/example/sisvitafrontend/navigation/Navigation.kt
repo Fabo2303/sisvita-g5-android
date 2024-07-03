@@ -10,8 +10,9 @@ import com.example.sisvitafrontend.screens.HomeScreen
 import com.example.sisvitafrontend.screens.patient.MenuPatientScreen
 import com.example.sisvitafrontend.screens.patient.MenuTestScreen
 import com.example.sisvitafrontend.screens.patient.RealizarTestScreen
-import com.example.sisvitafrontend.screens.specialist.HeatMapActivity
+import com.example.sisvitafrontend.screens.specialist.HeatmapScreen
 import com.example.sisvitafrontend.screens.specialist.MenuSpecialistScreen
+import com.example.sisvitafrontend.screens.specialist.PatientData
 import com.example.sisvitafrontend.screens.specialist.RealizarVigilanciaScreen
 
 @Composable
@@ -32,7 +33,11 @@ fun Navigation(){
         }
 
         composable(route = Screen.RealizarVigilanciaScreen.route){
-            RealizarVigilanciaScreen()
+            RealizarVigilanciaScreen(navController = navController)
+        }
+
+        composable(route = Screen.HeatMapScreen.route){
+            HeatmapScreen()
         }
 
         composable(
@@ -44,13 +49,15 @@ fun Navigation(){
                 RealizarTestScreen(navController = navController, id = id)
             }
         }
+
+        composable(
+            route = Screen.PatientData.route,
+            arguments = listOf(navArgument("id") { type = NavType.StringType })
+        ){
+            backStackEntry -> val id = backStackEntry.arguments?.getString("id")
+            if (id != null) {
+                PatientData(navController = navController, id = id)
+            }
+        }
     }
 }
-
-// Login para api
-// Especialista
-// juangomez
-// clave123
-// Paciente
-// pepito
-// clave123

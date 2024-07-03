@@ -19,6 +19,7 @@ import java.sql.Date
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
+import java.util.TimeZone
 
 @Composable
 fun DatePickerComponent(
@@ -26,7 +27,8 @@ fun DatePickerComponent(
     selectedDate: Date,
     onDateSelected: (Date) -> Unit
 ) {
-    val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+    val dateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+    dateFormat.timeZone = TimeZone.getTimeZone("America/Lima")
     val context = LocalContext.current
     val calendar = Calendar.getInstance().apply { time = selectedDate }
 

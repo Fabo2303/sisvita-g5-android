@@ -1,6 +1,5 @@
 package com.example.sisvitafrontend.screens.specialist
 
-import android.content.Intent
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -27,12 +26,14 @@ import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.sisvitafrontend.R
-import com.example.sisvitafrontend.components.Background
+import com.example.sisvitafrontend.components.global.Background
 import com.example.sisvitafrontend.components.ImagenButton
+import com.example.sisvitafrontend.components.global.CustomHeader
 import com.example.sisvitafrontend.navigation.Screen
 
 @Composable
 fun MenuSpecialistScreen(navController: NavController) {
+    val context = LocalContext.current
     Background()
     Column(
         modifier = Modifier
@@ -43,7 +44,7 @@ fun MenuSpecialistScreen(navController: NavController) {
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Top
     ){
-        Header()
+        CustomHeader()
         Spacer(modifier = Modifier.height(16.dp))
         Box(
             modifier = Modifier
@@ -56,9 +57,9 @@ fun MenuSpecialistScreen(navController: NavController) {
                 verticalArrangement = Arrangement.Center
             ) {
                 ImagenButton(
-                    text = R.string.realizar_vigilancia,
-                    color = R.color.button_light,
-                    textColor = R.color.text_black_900,
+                    text = R.string.take_surveillance,
+                    color = R.color.light_green_300,
+                    textColor = R.color.black_900,
                     shape = 12,
                     size = DpSize(width = 300.dp, height = 80.dp),
                     image = R.drawable.test,
@@ -69,68 +70,22 @@ fun MenuSpecialistScreen(navController: NavController) {
                     }
                 )
                 Spacer(modifier = Modifier.height(16.dp))
-                val context = LocalContext.current
                 ImagenButton(
-                    text = R.string.mapa_de_calor,
-                    color = R.color.button_light,
-                    textColor = R.color.text_black_900,
+                    text = R.string.heat_map,
+                    color = R.color.light_green_300,
+                    textColor = R.color.black_900,
                     shape = 12,
                     size = DpSize(width = 300.dp, height = 80.dp),
                     image = R.drawable.sociology,
                     imageSize = 40,
                     textSize = 20,
                     onClick = {
-                        val intent = Intent(context, HeatMapActivity::class.java)
-                        context.startActivity(intent)
+                        navController.navigate(Screen.HeatMapScreen.route)
+                        //val intent = Intent(context, HeatMapActivity::class.java)
+                        //context.startActivity(intent)
                     }
-                )
-                Spacer(modifier = Modifier.height(16.dp))
-                ImagenButton(
-                    text = R.string.consultar_resultados,
-                    color = R.color.button_light,
-                    textColor = R.color.text_black_900,
-                    shape = 12,
-                    size = DpSize(width = 300.dp, height = 80.dp),
-                    image = R.drawable.sociology,
-                    imageSize = 40,
-                    textSize = 20,
-                    onClick = {}
-                )
-                Spacer(modifier = Modifier.height(16.dp))
-                ImagenButton(
-                    text = R.string.realizar_test,
-                    color = R.color.button_light,
-                    textColor = R.color.text_black_900,
-                    shape = 12,
-                    size = DpSize(width = 300.dp, height = 80.dp),
-                    image = R.drawable.test,
-                    imageSize = 40,
-                    textSize = 20,
-                    onClick = {}
                 )
             }
         }
-    }
-}
-
-@Composable
-private fun Header() {
-    Box(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(
-                colorResource(id = R.color.header), shape = RoundedCornerShape(
-                    topStartPercent = 0,
-                    topEndPercent = 0,
-                    bottomStartPercent = 0,
-                    bottomEndPercent = 50
-                )
-            ), contentAlignment = Alignment.Center
-    ) {
-        Image(
-            painter = painterResource(id = R.drawable.rounded_logo),
-            contentDescription = "logo sisvita",
-            modifier = Modifier.size(200.dp)
-        )
     }
 }

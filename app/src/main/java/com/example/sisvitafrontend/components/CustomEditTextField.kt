@@ -1,5 +1,9 @@
 package com.example.sisvitafrontend.components
 
+import android.util.Patterns
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Visibility
@@ -14,9 +18,15 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
+import androidx.compose.ui.unit.dp
+import java.util.regex.Pattern
+import com.example.sisvitafrontend.R
 
 @Composable
 fun CustomEditTextField(
@@ -46,6 +56,42 @@ fun CommonTextField(
         label = { Text(stringResource(label)) },
         keyboardOptions = keyboardOptions,
     )
+
+}
+
+@Composable
+fun CustomTextField(
+    label: Int,
+    placeholder: Int,
+    keyboardType: KeyboardType,
+    value: String,
+    onValueChanged: (String) -> Unit,
+    alert: Int,
+    pattern: (String) -> Boolean
+){
+    var isValid by remember { mutableStateOf(true) }
+    Column(
+    ) {
+        TextField(
+            value = value,
+            onValueChange = {
+                onValueChanged(it)
+                isValid = pattern(it)
+            },
+            label = { Text(stringResource(id = label)) },
+            placeholder = { Text(stringResource(id = placeholder)) },
+            isError = !isValid,
+            keyboardOptions = KeyboardOptions.Default.copy(
+                keyboardType = keyboardType, imeAction = ImeAction.Next
+            ),
+        )
+        if (!isValid) {
+            Text(
+                text = stringResource(id = alert),
+                color = colorResource(id = R.color.red_900)
+            )
+        }
+    }
 }
 
 @Composable

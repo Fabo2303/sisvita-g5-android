@@ -1,23 +1,25 @@
 package com.example.sisvitafrontend.viewmodels
 
+import android.content.Context
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.sisvitafrontend.R
 import com.example.sisvitafrontend.api.requests.PatientRequest
 import com.example.sisvitafrontend.api.requests.PersonaRequest
 import com.example.sisvitafrontend.api.requests.UbigeoRequest
 import com.example.sisvitafrontend.api.requests.UserRequest
-import com.example.sisvitafrontend.api.responses.RegisterResponse
+import com.example.sisvitafrontend.api.responses.DocumentResponse
+import com.example.sisvitafrontend.api.responses.SexResponse
+import com.example.sisvitafrontend.navigation.ContextAplication
 import com.example.sisvitafrontend.network.ApiRetrofit
-import com.example.sisvitafrontend.network.NetworkResponse
 import kotlinx.coroutines.launch
-import org.json.JSONException
 import org.json.JSONObject
 import java.sql.Date
 
-class RegisterViewModel: ViewModel(){
+class RegisterViewModel : ViewModel() {
 
     private val registerApi = ApiRetrofit.registerApi
 
@@ -62,6 +64,18 @@ class RegisterViewModel: ViewModel(){
 
     private val _distrito = MutableLiveData("")
     val distrito: LiveData<String> = _distrito
+
+    private val _documentList = MutableLiveData<List<DocumentResponse>>()
+    val documentList: LiveData<List<DocumentResponse>> = _documentList
+
+    private val _sexList = MutableLiveData<List<SexResponse>>()
+    val sexList: LiveData<List<SexResponse>> = _sexList
+
+    private val _title = MutableLiveData("")
+    val title: LiveData<String> = _title
+
+    private val _message = MutableLiveData("")
+    val message: LiveData<String> = _message
 
     fun onUserChanged(newEmail: String) {
         _user.value = newEmail
@@ -119,23 +133,112 @@ class RegisterViewModel: ViewModel(){
         _distrito.value = newDistrito
     }
 
-    fun onRegisterClicked() {
+    fun clearData() {
+        _user.value = ""
+        _password.value = ""
+        _document.value = ""
+        _documentType.value = ""
+        _name.value = ""
+        _lastName.value = ""
+        _secondLastName.value = ""
+        _birthdate.value = Date(System.currentTimeMillis())
+        _sex.value = ""
+        _phone.value = ""
+        _email.value = ""
+        _departamento.value = ""
+        _provincia.value = ""
+        _distrito.value = ""
+    }
+
+    init {
+        getDocuments()
+        getSex()
+    }
+
+    private fun getSex() {
         viewModelScope.launch {
-            try{
-                val response = registerApi.register(buildPatientRequest())
-                if (response.isSuccessful){
+            try {
+                val response = registerApi.getSex()
+                if (response.isSuccessful) {
                     response.body()?.let {
-                        val registerResponse = it
-                        Log.i("RegisterViewModel", registerResponse.message)
+                        val sexResponse = it
+                        _sexList.value = sexResponse
                     }
                 }
-            }catch (e: Exception) {
+            } catch (e: Exception) {
                 Log.i("RegisterViewModel", e.message.toString())
             }
         }
     }
 
-    private fun buildPatientRequest(): PatientRequest{
+    private fun getDocuments() {
+        viewModelScope.launch {
+            try {
+                val response = registerApi.getDocuments()
+                if (response.isSuccessful) {
+                    response.body()?.let {
+                        val documentResponse = it
+                        _documentList.value = documentResponse
+                    }
+                }
+            } catch (e: Exception) {
+                Log.i("RegisterViewModel", e.message.toString())
+            }
+        }
+    }
+
+    fun onRegisterClicked() {
+        val context: Context = ContextAplication.applicationContext()
+        viewModelScope.launch {
+            try {
+                if (allIsNotNullOrEmpty()) {
+                    _title.value = context.getString(R.string.error)
+                    _message.value = context.getString(R.string.please_fill_all_fields)
+                    return@launch
+                }
+
+                val registerRequest = buildPatientRequest()
+
+                _title.value = context.getString(R.string.register_in_progress)
+                _message.value = context.getString(R.string.loading)
+
+                val response = registerApi.register(registerRequest)
+                if (response.isSuccessful) {
+                    response.body()?.let {
+                        val registerResponse = it
+                        _title.value = context.getString(R.string.register_success)
+                        _message.value = registerResponse.message
+                    }
+                }else{
+                    val errorBody = JSONObject(response.errorBody()?.string()!!)
+                    _title.value = context.getString(R.string.error)
+                    _message.value = errorBody.getString("error")
+                }
+            } catch (e: Exception) {
+                _title.value = context.getString(R.string.error)
+                _message.value = e.message.toString()
+            }
+        }
+    }
+
+    private fun allIsNotNullOrEmpty(): Boolean {
+        return user.value.isNullOrEmpty()
+                || password.value.isNullOrEmpty()
+                || document.value.isNullOrEmpty()
+                || documentType.value.isNullOrEmpty()
+                || name.value.isNullOrEmpty()
+                || lastName.value.isNullOrEmpty()
+                || secondLastName.value.isNullOrEmpty()
+                || birthdate.value == null
+                || sex.value.isNullOrEmpty()
+                || phone.value.isNullOrEmpty()
+                || email.value.isNullOrEmpty()
+                || departamento.value.isNullOrEmpty()
+                || provincia.value.isNullOrEmpty()
+                || distrito.value.isNullOrEmpty()
+    }
+
+    private fun buildPatientRequest(): PatientRequest {
         val ubigeoRequest = UbigeoRequest(
             departamento = departamento.value!!,
             provincia = provincia.value!!,

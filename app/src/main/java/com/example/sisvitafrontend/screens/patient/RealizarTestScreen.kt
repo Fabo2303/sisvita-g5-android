@@ -1,6 +1,5 @@
 package com.example.sisvitafrontend.screens.patient
 
-import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -32,6 +31,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
@@ -40,22 +40,20 @@ import com.example.sisvitafrontend.api.datastore.DataStoreManager
 import com.example.sisvitafrontend.api.requests.AnswerRequest
 import com.example.sisvitafrontend.api.responses.AlternativeResponse
 import com.example.sisvitafrontend.api.responses.QuestionResponse
-import com.example.sisvitafrontend.components.Background
-import com.example.sisvitafrontend.components.ResultDialog
+import com.example.sisvitafrontend.components.global.Background
+import com.example.sisvitafrontend.components.global.CustomDialog
+import com.example.sisvitafrontend.navigation.Screen
 import com.example.sisvitafrontend.viewmodels.ResolvedTestViewModel
 import com.example.sisvitafrontend.viewmodels.TemplateTestViewModel
 
 @Composable
 fun RealizarTestScreen(
-    navController: NavController,
-    id: String,
+    navController: NavController, id: String,
     templateTestViewModel: TemplateTestViewModel = viewModel(
-        modelClass =
-        TemplateTestViewModel::class
+        modelClass = TemplateTestViewModel::class
     ),
     resolvedTestViewModel: ResolvedTestViewModel = viewModel(
-        modelClass =
-        ResolvedTestViewModel::class
+        modelClass = ResolvedTestViewModel::class
     )
 ) {
     val templateTest by templateTestViewModel.templateTest.observeAsState()
@@ -66,8 +64,9 @@ fun RealizarTestScreen(
 
     val selectedOptions = remember { mutableStateMapOf<Int, AlternativeResponse>() }
 
-    val result by resolvedTestViewModel.result.observeAsState(0)
-    val interpretation by resolvedTestViewModel.interpretation.observeAsState("")
+    val title by resolvedTestViewModel.title.observeAsState("")
+    val message by resolvedTestViewModel.message.observeAsState("")
+    val color by resolvedTestViewModel.color.observeAsState(0)
 
     val context = LocalContext.current
     val dataStoreManager = remember {
@@ -105,7 +104,7 @@ fun RealizarTestScreen(
                                     .fillMaxWidth()
                                     .padding(5.dp)
                                     .background(
-                                        colorResource(id = R.color.header),
+                                        colorResource(id = R.color.white_900),
                                         shape = RoundedCornerShape(12.dp)
                                     ),
                                 horizontalAlignment = Alignment.CenterHorizontally,
@@ -133,18 +132,25 @@ fun RealizarTestScreen(
             Text(
                 text = "${selectedOptions.size} / ${questions?.size}",
                 style = MaterialTheme.typography.bodyLarge,
-                color = colorResource(id = R.color.header)
+                color = colorResource(id = R.color.white_900)
             )
 
-            ResultDialog(
-                result = result,
-                interpretation = interpretation,
+            CustomDialog(
+                buttonText = R.string.send_test,
+                title = title,
+                content = message,
+                color = color,
                 onClick = {
                     templateTest?.let {
                         createRequest(
                             selectedOptions, it.questions, it.id,
                             resolvedTestViewModel, dataStoreManager
                         )
+                    }
+                },
+                dialogOnClick = {
+                    if (title != context.getString(R.string.error)) {
+                        navController.navigate(Screen.MenuTestScreen.route)
                     }
                 }
             )
@@ -158,7 +164,7 @@ private fun Header(text: String) {
         modifier = Modifier
             .fillMaxSize()
             .background(
-                colorResource(id = R.color.header), shape = RoundedCornerShape(
+                colorResource(id = R.color.white_900), shape = RoundedCornerShape(
                     topStartPercent = 0,
                     topEndPercent = 0,
                     bottomStartPercent = 0,
@@ -174,7 +180,7 @@ private fun Header(text: String) {
             Text(text = text)
             Image(
                 painter = painterResource(id = R.drawable.rounded_logo),
-                contentDescription = "logo sisvita",
+                contentDescription = stringResource(id = R.string.logo_sisvita),
                 modifier = Modifier.size(100.dp)
             )
         }
@@ -239,11 +245,6 @@ fun createRequest(
     resolvedTestViewModel: ResolvedTestViewModel,
     dataStoreManager: DataStoreManager
 ) {
-    if (alternatives.isEmpty() || alternatives.size < questions.size) {
-        Log.i("RealizarTestScreen", "No se han seleccionado todas las alternativas")
-        return
-    }
-
     val answerRequest: MutableList<AnswerRequest> = mutableListOf()
 
     questions.forEach { question ->
@@ -251,11 +252,14 @@ fun createRequest(
         answerRequest.add(
             AnswerRequest(
                 idQuestion = question.id,
-                idAlternative = alternative.id
+                idAlternative = alternative.id,
+                inverted = question.inverted,
+                score = alternative.score,
+                invertedScore = alternative.invertedScore
             )
         )
     }
 
     resolvedTestViewModel.setAnswersRequest(answerRequest)
-    resolvedTestViewModel.sendResolvedTest(testId, dataStoreManager)
+    resolvedTestViewModel.sendResolvedTest(testId, dataStoreManager, questions.size)
 }

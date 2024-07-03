@@ -1,10 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="background">#114B5F</color>
-    <color name="button_light">#88D498</color>
-    <color name="button_dark">#1A936F</color>
-    <color name="container">#C6DABF</color>
-    <color name="header">#FFFFFF</color>
-    <color name="text_black_900">#000000</color>
-    <color name="text_red_900">#FF0000</color>
+    <color name="light_green_100">#C6DABF</color>
+    <color name="light_green_300">#88D498</color>
+    <color name="light_green_500">#1A936F</color>
+    <color name="light_green_700">#114B5F</color>
+    <color name="light_green_900">#0B2F3A</color>
+    <color name="white_900">#FFFFFF</color>
+    <color name="black_900">#000000</color>
+    <color name="red_900">#FF0000</color>
+    <color name="green_900">#00FF00</color>
+    <color name="yellow_900">#FFFF00</color>
+    <color name="red_500">#AC4C4C</color>
+    <color name="green_500">#69A869</color>
+    <color name="yellow_500">#A1A15C</color>
+    <color name="purple_600">#9659EA</color>
 </resources>

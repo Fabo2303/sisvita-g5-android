@@ -1,10 +1,12 @@
 package com.example.sisvitafrontend.network
 
 import com.example.sisvitafrontend.api.services.ConsignacionApi
+import com.example.sisvitafrontend.api.services.DiagnosticApi
 import com.example.sisvitafrontend.api.services.LoginApi
 import com.example.sisvitafrontend.api.services.RegisterApi
 import com.example.sisvitafrontend.api.services.ResolvedTestApi
 import com.example.sisvitafrontend.api.services.TemplateTestApi
+import com.example.sisvitafrontend.api.services.TreatmentApi
 import com.example.sisvitafrontend.api.services.UbigeoApi
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import okhttp3.OkHttpClient
@@ -37,4 +39,6 @@ object ApiRetrofit {
     val templateTestApi: TemplateTestApi = getRetrofit().create(TemplateTestApi::class.java)
     val resolvedTestApi: ResolvedTestApi = getRetrofit().create(ResolvedTestApi::class.java)
     val consignacionApi: ConsignacionApi = getRetrofit().create(ConsignacionApi::class.java)
+    val treatmentApi = getRetrofit().create(TreatmentApi::class.java)
+    val diagnosticApi = getRetrofit().create(DiagnosticApi::class.java)
 }

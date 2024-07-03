@@ -1,4 +1,4 @@
-package com.example.sisvitafrontend.components
+package com.example.sisvitafrontend.components.global
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -13,6 +13,6 @@ fun Background(){
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(colorResource(id = R.color.background))
+            .background(colorResource(id = R.color.light_green_700))
     )
 }

@@ -4,6 +4,7 @@ data class ResolvedTestResponse(
     val id: Long,
     val result: Int,
     val interpretation: String,
+    val color: String,
     val date: String,
     val templateTest: TemplateTestResponse,
     val classification: ClassificationResponse,

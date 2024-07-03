@@ -1,21 +1,22 @@
 package com.example.sisvitafrontend.viewmodels
 
-import android.util.Log
+import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavController
 import com.auth0.android.jwt.JWT
+import com.example.sisvitafrontend.R
 import com.example.sisvitafrontend.api.datastore.DataStoreManager
 import com.example.sisvitafrontend.api.requests.LoginRequest
 import com.example.sisvitafrontend.api.responses.LoginResponse
+import com.example.sisvitafrontend.navigation.ContextAplication
 import com.example.sisvitafrontend.navigation.Screen
 import com.example.sisvitafrontend.network.ApiRetrofit
-import com.example.sisvitafrontend.network.NetworkResponse
 import kotlinx.coroutines.launch
-import org.json.JSONException
 import org.json.JSONObject
+import retrofit2.Response
 
 class LoginViewModel : ViewModel() {
 
@@ -27,6 +28,15 @@ class LoginViewModel : ViewModel() {
     private val _password = MutableLiveData("")
     val password: LiveData<String> = _password
 
+    private val _title = MutableLiveData("")
+    val title: LiveData<String> = _title
+
+    private val _message = MutableLiveData("")
+    val message: LiveData<String> = _message
+
+    private val _role = MutableLiveData("")
+    private val role: LiveData<String> = _role
+
     fun onUserChanged(newEmail: String) {
         _user.value = newEmail
     }
@@ -35,34 +45,73 @@ class LoginViewModel : ViewModel() {
         _password.value = newPassword
     }
 
-    fun onLoginClicked(dataStoreManager: DataStoreManager, navController: NavController) {
+    private fun clearData() {
+        _user.value = ""
+        _password.value = ""
+        _role.value = ""
+    }
+
+    fun onLoginClicked(dataStoreManager: DataStoreManager) {
+        val context: Context = ContextAplication.applicationContext()
         viewModelScope.launch {
             try {
-                val response = loginApi.login(LoginRequest(user.value!!, password.value!!))
-                if (response.isSuccessful){
-                    response.body()?.let {
-                        val jwt = it.jwt
-                        if (jwt.isNotEmpty()){
-                            dataStoreManager.saveJwt(jwt)
-                            val decodedJwt = JWT(jwt)
-                            val role = decodedJwt.getClaim("role").asString()
-                            val id = decodedJwt.getClaim("id").asString()
-                            if (role != null) {
-                                dataStoreManager.saveRole(role)
-                                if (id != null) {
-                                    dataStoreManager.saveId(id)
-                                    if (role == "SPECIALIST")
-                                        navController.navigate(Screen.MenuSpecialistScreen.route)
-                                    else
-                                        navController.navigate(Screen.MenuPatientScreen.route)
-                                }
-                            }
-                        }
-                    }
+                if (user.value.isNullOrEmpty() || password.value.isNullOrEmpty()) {
+                    _title.value = context.getString(R.string.error)
+                    _message.value = context.getString(R.string.please_fill_all_fields)
+                    return@launch
                 }
+
+                val loginRequest = LoginRequest(user.value!!, password.value!!)
+
+                _title.value = context.getString(R.string.login_in_progress)
+                _message.value = context.getString(R.string.loading)
+
+                val response = loginApi.login(loginRequest)
+                login(response, dataStoreManager, context)
             } catch (e: Exception) {
-                Log.i("LoginViewModel", e.message.toString())
+                _title.value = context.getString(R.string.error)
+                _message.value = e.message.toString()
             }
+
+        }
+    }
+
+    private suspend fun login(
+        response: Response<LoginResponse>,
+        dataStoreManager: DataStoreManager,
+        context: Context
+    ) {
+        if (response.isSuccessful) {
+            response.body()?.let {
+                val jwt = it.jwt
+                val decodedJwt = JWT(jwt)
+                dataStoreManager.saveJwt(jwt)
+                decodedJwt.getClaim("id").asString()
+                    ?.let { it1 -> dataStoreManager.saveId(it1) }
+                decodedJwt.getClaim("role").asString()
+                    ?.let { it1 -> dataStoreManager.saveRole(it1) }
+                _title.value = context.getString(R.string.login_success)
+                _message.value = context.getString(R.string.welcome_to_sisvita)
+                _role.value = decodedJwt.getClaim("role").asString()
+            }
+        } else {
+            val errorBody = JSONObject(response.errorBody()?.string()!!)
+            _title.value = context.getString(R.string.error)
+            _message.value = errorBody.getString("error")
+        }
+    }
+
+    fun goToMenu(navController: NavController) {
+        val context: Context = ContextAplication.applicationContext()
+        if (role.value.isNullOrEmpty()) {
+            return
+        }
+        if (role.value == context.getString(R.string.specialist)) {
+            clearData()
+            navController.navigate(Screen.MenuSpecialistScreen.route)
+        } else {
+            clearData()
+            navController.navigate(Screen.MenuPatientScreen.route)
         }
     }
 }

@@ -30,8 +30,9 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.example.sisvitafrontend.R
-import com.example.sisvitafrontend.components.Background
+import com.example.sisvitafrontend.components.global.Background
 import com.example.sisvitafrontend.components.TextButton
+import com.example.sisvitafrontend.components.global.CustomHeader
 import com.example.sisvitafrontend.viewmodels.TemplateTestViewModel
 
 @Composable
@@ -52,7 +53,7 @@ fun MenuTestScreen(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Top
     ){
-        Header()
+        CustomHeader(DpSize(100.dp, 100.dp))
         Box(
             modifier = Modifier
                 .fillMaxWidth(1f)
@@ -66,8 +67,8 @@ fun MenuTestScreen(
                 items(templateTests) { templateTest ->
                     TextButton(
                         text = templateTest.name,
-                        color = R.color.button_light,
-                        textColor = R.color.text_black_900,
+                        color = R.color.light_green_300,
+                        textColor = R.color.black_900,
                         shape = 12,
                         size = DpSize(width = 300.dp, height = 80.dp),
                         textSize = 20,
@@ -79,27 +80,5 @@ fun MenuTestScreen(
                 }
             }
         }
-    }
-}
-
-@Composable
-private fun Header() {
-    Box(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(
-                colorResource(id = R.color.header), shape = RoundedCornerShape(
-                    topStartPercent = 0,
-                    topEndPercent = 0,
-                    bottomStartPercent = 0,
-                    bottomEndPercent = 50
-                )
-            ), contentAlignment = Alignment.Center
-    ) {
-        Image(
-            painter = painterResource(id = R.drawable.rounded_logo),
-            contentDescription = "logo sisvita",
-            modifier = Modifier.size(100.dp)
-        )
     }
 }

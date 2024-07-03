@@ -5,21 +5,16 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.sisvitafrontend.api.responses.ResolvedTestResponseDataPatient
-import com.example.sisvitafrontend.api.responses.ResolvedTestResponseTableFormat
+import com.example.sisvitafrontend.api.responses.ResolveTestResponseHeatMap
 import com.example.sisvitafrontend.network.ApiRetrofit
 import kotlinx.coroutines.launch
 import java.sql.Date
 
-class RealizarVigilanciaViewModel: ViewModel() {
+class RealizarVigilanciaHeatMapViewModel : ViewModel(){
     private val resolvedTestApi = ApiRetrofit.resolvedTestApi
 
-    private val _listTest = MutableLiveData<List<ResolvedTestResponseTableFormat>>()
-    val listTest: LiveData<List<ResolvedTestResponseTableFormat>> get() = _listTest
-
-    val _testResponse = MutableLiveData<ResolvedTestResponseDataPatient>()
-    val testResponse: LiveData<ResolvedTestResponseDataPatient> get() = _testResponse
-
+    private val _listTest = MutableLiveData<List<ResolveTestResponseHeatMap>>()
+    val listTest: LiveData<List<ResolveTestResponseHeatMap>> get() = _listTest
 
     init {
         getResolvedTestResponse()
@@ -28,24 +23,11 @@ class RealizarVigilanciaViewModel: ViewModel() {
     fun getResolvedTestResponse(){
         viewModelScope.launch {
             try {
-                val response = resolvedTestApi.getResolvedTestResponse()
+                val response = resolvedTestApi.getResolvedTestHeatMap()
                 _listTest.value = response.body()
                 Log.i("RealizarVigilanciaViewModel", "getResolvedTestResponse: ${response.body()?.get(0)}")
             } catch (e: Exception) {
                 Log.e("RealizarVigilanciaViewModel", "getResolvedTestResponse: ${e.message}")
-            }
-        }
-    }
-
-    fun getResolvedTestById(id: Long){
-        viewModelScope.launch {
-            try {
-                val response = resolvedTestApi.getResolvedTestById(id)
-                _testResponse.value = response.body()
-                Log.i("RealizarVigilanciaViewModel", "id: $id")
-                Log.i("RealizarVigilanciaViewModel", "getResolvedTestById: ${response.body()}")
-            } catch (e: Exception) {
-                Log.e("RealizarVigilanciaViewModel", "getResolvedTestById: ${e.message}")
             }
         }
     }
@@ -72,7 +54,7 @@ class RealizarVigilanciaViewModel: ViewModel() {
     private fun getResolvedTestByTemplateTestName(tipoTest: String) {
         viewModelScope.launch {
             try {
-                val response = resolvedTestApi.getResolvedTestByTemplateTestName(tipoTest)
+                val response = resolvedTestApi.getResolvedTestByTemplateTestNameHeatMap(tipoTest)
                 _listTest.value = response.body()
                 Log.i("RealizarVigilanciaViewModel", "getResolvedTestByTipoTest: ${response.body()?.get(0)}")
             } catch (e: Exception) {
@@ -84,7 +66,7 @@ class RealizarVigilanciaViewModel: ViewModel() {
     private fun getResolvedTestByDateBetweenAndTemplateTestName(fechaInicial: Date, fechaFinal: Date, tipoTest: String) {
         viewModelScope.launch {
             try {
-                val response = resolvedTestApi.getResolvedTestByDateBetweenAndTemplateTestName(fechaInicial.toString(), fechaFinal.toString(), tipoTest)
+                val response = resolvedTestApi.getResolvedTestByDateBetweenAndTemplateTestNameHeatMap(fechaInicial.toString(), fechaFinal.toString(), tipoTest)
                 _listTest.value = response.body()
                 Log.i("RealizarVigilanciaViewModel", "getResolvedTestByDateBetweenAndTemplateTestName: ${response.body()?.get(0)}")
             } catch (e: Exception) {
@@ -96,7 +78,7 @@ class RealizarVigilanciaViewModel: ViewModel() {
     private fun getResolvedTestByDateBetween(fechaInicial: Date, fechaFinal: Date) {
         viewModelScope.launch {
             try {
-                val response = resolvedTestApi.getResolvedTestByDateBetween(fechaInicial.toString(), fechaFinal.toString())
+                val response = resolvedTestApi.getResolvedTestByDateBetweenHeatMap(fechaInicial.toString(), fechaFinal.toString())
                 _listTest.value = response.body()
                 Log.i("RealizarVigilanciaViewModel", "getResolvedTestByDateBetween: ${response.body()?.get(0)}")
             } catch (e: Exception) {
@@ -108,7 +90,7 @@ class RealizarVigilanciaViewModel: ViewModel() {
     private fun getResolvedTestByClassificationInterpretation(ansiedad: String) {
         viewModelScope.launch {
             try {
-                val response = resolvedTestApi.getResolvedTestByClassificationInterpretation(ansiedad)
+                val response = resolvedTestApi.getResolvedTestByClassificationInterpretationHeatMap(ansiedad)
                 _listTest.value = response.body()
                 Log.i("RealizarVigilanciaViewModel", "getResolvedTestByClassificationInterpretation: ${response.body()?.get(0)}")
             } catch (e: Exception) {
@@ -120,7 +102,7 @@ class RealizarVigilanciaViewModel: ViewModel() {
     private fun getResolvedTestByDateBetweenAndClassificationInterpretation(fechaInicial: Date, fechaFinal: Date, ansiedad: String) {
         viewModelScope.launch {
             try {
-                val response = resolvedTestApi.getResolvedTestByDateBetweenAndClassificationInterpretation(fechaInicial.toString(), fechaFinal.toString(), ansiedad)
+                val response = resolvedTestApi.getResolvedTestByDateBetweenAndClassificationInterpretationHeatMap(fechaInicial.toString(), fechaFinal.toString(), ansiedad)
                 _listTest.value = response.body()
                 Log.i("RealizarVigilanciaViewModel", "getResolvedTestByDateBetweenAndClassificationInterpretation: ${response.body()?.get(0)}")
             } catch (e: Exception) {
@@ -132,7 +114,7 @@ class RealizarVigilanciaViewModel: ViewModel() {
     private fun getResolvedTestByTemplateTestNameAndClassificationInterpretation(tipoTest: String, ansiedad: String) {
         viewModelScope.launch {
             try {
-                val response = resolvedTestApi.getResolvedTestByTemplateTestNameAndClassificationInterpretation(tipoTest, ansiedad)
+                val response = resolvedTestApi.getResolvedTestByTemplateTestNameAndClassificationInterpretationHeatMap(tipoTest, ansiedad)
                 _listTest.value = response.body()
                 Log.i("RealizarVigilanciaViewModel", "getResolvedTestByTemplateTestNameAndClassificationInterpretation: ${response.body()?.get(0)}")
             } catch (e: Exception) {
@@ -144,7 +126,7 @@ class RealizarVigilanciaViewModel: ViewModel() {
     private fun getResolvedTestByDateBetweenAndTemplateTestNameAndClassificationInterpretation(fechaInicial: Date, fechaFinal: Date, tipoTest: String, ansiedad: String) {
         viewModelScope.launch {
             try {
-                val response = resolvedTestApi.getResolvedTestByDateBetweenAndTemplateTestNameAndClassificationInterpretation(fechaInicial.toString(), fechaFinal.toString(), tipoTest, ansiedad)
+                val response = resolvedTestApi.getResolvedTestByDateBetweenAndTemplateTestNameAndClassificationInterpretationHeatMap(fechaInicial.toString(), fechaFinal.toString(), tipoTest, ansiedad)
                 _listTest.value = response.body()
                 Log.i("RealizarVigilanciaViewModel", "getResolvedTestByDateBetweenAndTemplateTestNameAndClassificationInterpretation: ${response.body()?.get(0)}")
             } catch (e: Exception) {
@@ -152,6 +134,4 @@ class RealizarVigilanciaViewModel: ViewModel() {
             }
         }
     }
-
-
 }

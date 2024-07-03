@@ -9,7 +9,7 @@ interface TemplateTestApi {
     @GET("api/template-test/dto")
     suspend fun getTipoTest(): List<TemplateTestResponse>
 
-    @GET("api/template-test/{id}")
+    @GET("api/template-test/dto/{id}")
     suspend fun getTipoTestById(@Path("id") id: Long): TemplateTestResponse
 
     @GET("api/template-test/name")
