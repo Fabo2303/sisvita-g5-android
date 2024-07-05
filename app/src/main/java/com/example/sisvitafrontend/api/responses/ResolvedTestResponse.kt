@@ -1,5 +1,8 @@
 package com.example.sisvitafrontend.api.responses
 
+import com.example.sisvitafrontend.screens.realizartest.data.TemplateTestResponse
+import com.example.sisvitafrontend.screens.realizartest.data.response.AnswerResponse
+
 data class ResolvedTestResponse(
     val id: Long,
     val result: Int,

@@ -1,5 +1,7 @@
 package com.example.sisvitafrontend.api.responses
 
+import com.example.sisvitafrontend.screens.register.data.response.UbigeoResponse
+
 data class PersonaResponse(
     val document: String,
     val documentType: String,
