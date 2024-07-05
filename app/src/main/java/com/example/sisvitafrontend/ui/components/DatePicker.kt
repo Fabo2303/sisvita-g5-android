@@ -48,7 +48,7 @@ fun DatePickerComponent(
             calendar.get(Calendar.DAY_OF_MONTH)
         )
         val minDate = Calendar.getInstance().apply { add(Calendar.YEAR, -90) }.timeInMillis
-        val maxDate = Calendar.getInstance().apply { add(Calendar.YEAR, -12) }.timeInMillis
+        val maxDate = Calendar.getInstance().apply { add(Calendar.YEAR, -17) }.timeInMillis
 
         datePickerDialog.datePicker.minDate = minDate
         datePickerDialog.datePicker.maxDate = maxDate

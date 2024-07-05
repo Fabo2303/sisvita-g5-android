@@ -156,12 +156,12 @@ fun FormDiagnostico(
     val diagnosticList by consignacionViewModel.diagnosticList.observeAsState(emptyList())
 
     Text(
-        text = stringResource(id = R.string.diagnostic)
+        text = stringResource(id = R.string.diagnosis)
     )
     Spacer(modifier = Modifier.height(8.dp))
     if (change) {
         CommonTextField(
-            label = R.string.diagnostic,
+            label = R.string.diagnosis,
             keyboardOptions = KeyboardOptions(
                 keyboardType = KeyboardType.Text,
                 imeAction = ImeAction.Done
