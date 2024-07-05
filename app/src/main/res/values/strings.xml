@@ -43,6 +43,7 @@
     <string name="department">Departamento</string>
     <string name="province">Provincia</string>
     <string name="district">Distrito</string>
+    <string name="specialist_name">especialista</string>
     <string name="specialist">SPECIALIST</string>
     <string name="patient">PATIENT</string>
 
@@ -81,6 +82,7 @@
     <string name="details">Ver</string>
     <string name="close">Cerrar</string>
     <string name="consign">Consignar</string>
+    <string name="consignation">Consignación</string>
     <string name="consign_in_progress">Consignando…</string>
     <string name="patient_data">Datos del paciente</string>
     <string name="test_results">Resultados del test</string>
@@ -92,8 +94,9 @@
     <string name="evaluation">Evaluación</string>
     <string name="treatment">Tratamiento</string>
     <string name="comunication">Comunicación</string>
-    <string name="diagnostic">Diagnóstico</string>
+    <string name="diagnosis">Diagnóstico</string>
     <string name="fundament">Fundamento</string>
     <string name="choose_diagnosis">Elija un diagnostico</string>
     <string name="choose_treatment">Elija un tratamiento</string>
+    <string name="see_more">Ver más</string>
 </resources>
