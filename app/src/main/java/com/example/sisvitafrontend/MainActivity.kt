@@ -8,7 +8,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import com.example.sisvitafrontend.navigation.Navigation
+import com.example.sisvitafrontend.config.navigation.Navigation
 import com.example.sisvitafrontend.ui.theme.SisvitaFrontendTheme
 
 class MainActivity : ComponentActivity() {
