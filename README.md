@@ -31,5 +31,15 @@ Esta aplicación gira en torno a un sistema que permite a los pacientes `realiza
 git clone git@github.com:Fabo2303/sisvita-g5-android.git
 ````
 - Abrir el proyecto en Android Studio
+
 - Ejecutar el proyecto en un dispositivo virtual o en un celular real.
+
 - Listo para usar.
+
+## Credenciales de prueba
+- Paciente
+  - username: fabo
+  - password: clave123
+- Especialista
+  - username: jperez
+  - password: clave123
